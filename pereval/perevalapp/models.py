@@ -22,6 +22,10 @@ class Level(models.Model):
 
 
 class Pereval(models.Model):
+    STATUS_CHOICES = (
+        ('new', 'новый'), ('pending ', 'в работе'),
+        ('accepted ', 'принят'), ('rejected ', 'отклонён')
+    )    
     beauty_title = models.CharField(max_length=100)
     title = models.CharField(max_length=100)
     other_titles = models.CharField(max_length=100)
@@ -30,6 +34,7 @@ class Pereval(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     coords = models.ForeignKey(Coords, on_delete=models.CASCADE)
     level = models.ForeignKey(Level, on_delete=models.CASCADE)
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='new')
 
 
 class Images(models.Model):
