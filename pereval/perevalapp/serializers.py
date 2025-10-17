@@ -1,33 +1,43 @@
 from rest_framework import serializers
 
 from perevalapp.models import Coords, Images, Level, Pereval, User
+from drf_writable_nested.serializers import WritableNestedModelSerializer
 
-class UserSerializer(serializers.ModelSerializer):
+
+class UserSerializer(WritableNestedModelSerializer):
     class Meta:
         model = User
-        fields = '__all__'
+        fields = ['email', 'fam', 'name', 'otc', 'phone']
 
 
-class CoordsSerializer(serializers.ModelSerializer):
+class CoordsSerializer(WritableNestedModelSerializer):
     class Meta:
         model = Coords
-        fields = '__all__'
+        fields = ['latitude', 'longitude', 'height']
 
 
-class LevelSerializer(serializers.ModelSerializer):
+class LevelSerializer(WritableNestedModelSerializer):
     class Meta:
         model = Level
-        fields = '__all__'
+        fields = ['winter', 'summer', 'autumn', 'spring']
 
 
-class PerevalSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Pereval
-        fields = '__all__'
-
-
-class ImagesSerializer(serializers.ModelSerializer):
+class ImagesSerializer(WritableNestedModelSerializer):
     class Meta:
         model = Images
-        fields = '__all__'
+        fields = ['title', 'data']
 
+
+class PerevalSerializer(WritableNestedModelSerializer):
+    user = UserSerializer()
+    coords = CoordsSerializer()
+    level = LevelSerializer()
+    images = ImagesSerializer(many=True)
+    status = serializers.CharField(read_only=True)
+
+    class Meta:
+        model = Pereval
+        fields = [
+            'url', 'beauty_title', 'title', 'other_titles', 'connect',
+            'add_time', 'user', 'coords', 'level', 'status', 'images'
+        ]
