@@ -1,28 +1,38 @@
 from django.db import models
 
-# {
-#   "beauty_title": "пер. ",
-#   "title": "Пхия",
-#   "other_titles": "Триев",
-#   "connect": "", // что соединяет, текстовое поле
- 
-#   "add_time": "2021-09-22 13:18:13",
-#   "user": {"email": "qwerty@mail.ru", 		
-#         "fam": "Пупкин",
-# 		 "name": "Василий",
-# 		 "otc": "Иванович",
-#         "phone": "+7 555 55 55"}, 
- 
-#    "coords":{
-#   "latitude": 45.3842,
-#   "longitude": 7.1525,
-#   "height": "1200"}
- 
- 
-#   level:{"winter": "", //Категория трудности. В разное время года перевал может иметь разную категорию трудности
-#   "summer": "1А",
-#   "autumn": "1А",
-#   "spring": ""},
- 
-#    images: [{"data":"картинка1", "title":"Седловина"}, {"data":"картинка", "title":"Подъём"}]
-# }
+class User(models.Model):
+    email = models.EmailField()
+    fam = models.CharField(max_length=100)
+    name = models.CharField(max_length=100)
+    otc = models.CharField(max_length=100)
+    phone = models.CharField(max_length=100)
+
+
+class Coords(models.Model):
+    latitude = models.FloatField()
+    longitude = models.FloatField()
+    height = models.IntegerField()
+
+
+class Level(models.Model):
+    winter = models.CharField(max_length=100, blank=True, null=True)
+    summer = models.CharField(max_length=100, blank=True, null=True)
+    autumn = models.CharField(max_length=100, blank=True, null=True)
+    spring = models.CharField(max_length=100, blank=True, null=True)
+
+
+class Pereval(models.Model):
+    beauty_title = models.CharField(max_length=100)
+    title = models.CharField(max_length=100)
+    other_titles = models.CharField(max_length=100)
+    connect = models.CharField(max_length=100, blank=True, null=True)
+    add_time = models.DateTimeField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    coords = models.ForeignKey(Coords, on_delete=models.CASCADE)
+    level = models.ForeignKey(Level, on_delete=models.CASCADE)
+
+
+class Images(models.Model):
+    pereval = models.ForeignKey(Pereval, on_delete=models.CASCADE, related_name='images')
+    data = models.CharField(max_length=100)
+    title = models.CharField(max_length=100)
