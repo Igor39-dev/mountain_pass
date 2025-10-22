@@ -6,7 +6,7 @@ from perevalapp.views import PerevalViewSet
 from .yasg import urlpatterns as yasg_urlpatterns
 
 router = DefaultRouter()
-router.register('pereval', PerevalViewSet)
+router.register('pereval', PerevalViewSet, basename='pereval')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
