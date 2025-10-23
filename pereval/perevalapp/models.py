@@ -23,8 +23,8 @@ class Level(models.Model):
 
 class Pereval(models.Model):
     STATUS_CHOICES = (
-        ('new', 'новый'), ('pending ', 'в работе'),
-        ('accepted ', 'принят'), ('rejected ', 'отклонён')
+        ('new', 'новый'), ('pending', 'в работе'),
+        ('accepted', 'принят'), ('rejected', 'отклонён')
     )    
     beauty_title = models.CharField(max_length=100)
     title = models.CharField(max_length=100)
