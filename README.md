@@ -32,7 +32,7 @@
 ## ⚡ Локальный запуск проекта
 
 1. Клонируем репозиторий<br>
-git clone https://github.com/ваш-username/mountain_pass<br>
+git clone https://github.com/Igor39-dev/mountain_pass<br>
 **cd mountain_pass**
 
 2. Создаём виртуальное окружение<br>
